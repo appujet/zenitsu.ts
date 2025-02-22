@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
     type UsingClient as NoShadowUsingClient,
     type ParseMiddlewares,
@@ -28,6 +30,9 @@ const client = new Client({
         return config.rc;
     },
     commands: {
+        prefix() {
+            return [`!`];
+        },
         defaults: {
             onRunError(ctx, error) {
                 client.logger.error(
@@ -80,7 +85,7 @@ client.setServices({
 });
 client.queue.start();
 // Await client.games.syncFromCache();
-await client.start({}, false);
+await client.start();
 await client.uploadCommands({
     cachePath: join(process.cwd(), `_seyfert_cache.json`)
 });
